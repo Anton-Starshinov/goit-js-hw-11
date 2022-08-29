@@ -9,6 +9,7 @@ const btnLoadMoreEl = document.querySelector('.load-more');
 const galeryEl = document.querySelector('.gallery');
 
 formEl.addEventListener('submit', onSearch);
+btnLoadMoreEl.addEventListener('click', onloadImg);
 
 btnLoadMoreEl.style.display = 'none';
 let page = 1;
@@ -30,7 +31,10 @@ function onSearch(evt) {
 function onloadImg() {
   getUser(searchQuery).then(({ data }) => {
     rendorImagesGallery(data.hits);
-    loadMoreBtn.style.display = 'block';
+    page += 1;
+    if (page > 1) {
+      btnLoadMoreEl.style.display = 'block';
+    }
   });
 }
 
@@ -59,6 +63,7 @@ async function getUser(name) {
     );
   }
 }
+getUser().then(users => console.log(users));
 
 function rendorImagesGallery(img) {
   const markup = img
