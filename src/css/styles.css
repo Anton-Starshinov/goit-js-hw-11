@@ -1,11 +1,14 @@
 .search-form {
   display: flex;
   justify-content: center;
-  padding: 15px;
-  margin-bottom: 24px;
+  padding: 20px;
   background-color: #2196f3;
 }
-img {
+.container {
+  position: fixed;
+  width: 100%;
+}
+.img {
   display: block;
   max-width: 400px;
 }
