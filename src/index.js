@@ -30,23 +30,27 @@ function onSearch(evt) {
 }
 
 function onloadImg() {
-  getUser(searchQuery).then(({ data }) => {
+  getUser(searchQuery, page).then(({ data }) => {
+    rendorImagesGallery(data.hits);
+    page += 1;
+
     if (data.totalHits === 0) {
       Notify.failure(
         'Sorry, there are no images matching your search query. Please try again.'
       );
-    } else {
-      rendorImagesGallery(data.hits);
-      page += 1;
-      if (page > 1) {
-        btnLoadMoreEl.style.display = 'block';
-      }
+    }
+    if (page > 1) {
+      btnLoadMoreEl.style.display = 'block';
     }
     if (data.hits.length < 40) {
       btnLoadMoreEl.style.display = 'none';
-      Notify.failure(
+    }
+    if (data.hits > 500) {
+      Notiflix.Notify.failure(
         "We're sorry, but you've reached the end of search results."
       );
+      loadButton.style.display = 'none';
+      return;
     }
     gallery.refresh();
   });
